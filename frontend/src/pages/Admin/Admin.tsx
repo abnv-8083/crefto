@@ -16,13 +16,18 @@ import {
   Compass,
   Mail,
   Sliders,
+  LogOut,
 } from 'lucide-react';
 import { useContent, ISiteContent, IServiceItem, IProjectItem } from '../../context/ContentContext';
+import { AdminLogin } from './AdminLogin';
 import './Admin.css';
 
 type AdminTab = 'hero' | 'marquee' | 'about' | 'services' | 'process' | 'projects' | 'advantages' | 'contact' | 'footer';
 
 export const Admin: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return sessionStorage.getItem('crefto_admin_auth') === 'true';
+  });
   const { content, saveAll, resetToDefault, saving, lastSavedAt } = useContent();
   const [formData, setFormData] = useState<ISiteContent>(content);
   const [activeTab, setActiveTab] = useState<AdminTab>('hero');
@@ -91,6 +96,10 @@ export const Admin: React.FC = () => {
     { id: 'footer', label: 'Footer & Socials', icon: <Sliders size={16} /> },
   ];
 
+  if (!isAuthenticated) {
+    return <AdminLogin onSuccess={() => setIsAuthenticated(true)} onCancel={navigateToLive} />;
+  }
+
   return (
     <div className="admin-layout">
       {/* Top Header */}
@@ -132,6 +141,19 @@ export const Admin: React.FC = () => {
           >
             <ExternalLink size={14} />
             <span>View Live Site</span>
+          </button>
+
+          <button
+            type="button"
+            className="admin-btn admin-btn-secondary"
+            onClick={() => {
+              sessionStorage.removeItem('crefto_admin_auth');
+              setIsAuthenticated(false);
+            }}
+            title="Sign Out of Admin"
+          >
+            <LogOut size={14} />
+            <span>Sign Out</span>
           </button>
 
           <button
