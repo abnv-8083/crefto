@@ -1,17 +1,83 @@
-import React, { useState } from 'react';
-import { Mail, Phone, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Mail, Phone, Send, CheckCircle2, AlertCircle, Clock, Sparkles } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '../../components/Button/Button';
 import { submitContactForm } from '../../services/api';
+import { useContent } from '../../context/ContentContext';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const Contact: React.FC = () => {
+  const { content } = useContent();
+  const contactData = content.contact;
+  const sectionRef = useRef<HTMLElement>(null);
+  const infoColRef = useRef<HTMLDivElement>(null);
+  const formCardRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
 
+  const [selectedService, setSelectedService] = useState('Bespoke Website');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  const serviceOptions = contactData.servicesList && contactData.servicesList.length > 0
+    ? contactData.servicesList
+    : [
+        'Bespoke Website',
+        'Web Application',
+        'E-Commerce Store',
+        'Website Redesign',
+        'Maintenance & Support',
+      ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (infoColRef.current) {
+        gsap.fromTo(
+          infoColRef.current.children,
+          { opacity: 0, x: -35 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.85,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: infoColRef.current,
+              start: 'top 82%',
+              once: true,
+            },
+          }
+        );
+      }
+
+      if (formCardRef.current) {
+        gsap.fromTo(
+          formCardRef.current,
+          { opacity: 0, y: 40, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.85,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: formCardRef.current,
+              start: 'top 82%',
+              once: true,
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -23,7 +89,7 @@ export const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      setStatus({ type: 'error', message: 'Please fill out all fields.' });
+      setStatus({ type: 'error', message: 'Please fill out all required fields.' });
       return;
     }
 
@@ -31,8 +97,13 @@ export const Contact: React.FC = () => {
     setStatus(null);
 
     try {
-      const res = await submitContactForm(formData);
-      setStatus({ type: 'success', message: res.message || 'Message sent successfully!' });
+      const fullMessage = `[Project Type: ${selectedService}]\n\n${formData.message}`;
+      const res = await submitContactForm({
+        name: formData.name,
+        email: formData.email,
+        message: fullMessage,
+      });
+      setStatus({ type: 'success', message: res.message || 'Message sent successfully! We will get back to you shortly.' });
       setFormData({ name: '', email: '', message: '' });
     } catch (err: any) {
       setStatus({ type: 'error', message: err.message || 'Something went wrong. Please try again.' });
@@ -42,51 +113,79 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="contact-section">
+    <section id="contact" ref={sectionRef} className="contact-section">
       <div className="contact-container">
         {/* Left Column: Contact details & intro */}
-        <div className="contact-info-col">
+        <div ref={infoColRef} className="contact-info-col">
           <div className="section-tag-wrapper">
-            <span className="section-tag-text">GET IN TOUCH</span>
-            <span className="section-tag-line"></span>
+            <span className="section-tag-text">{contactData.sectionTag}</span>
+            <span className="section-tag-line" />
           </div>
 
-          <h2 className="section-main-title">Contact Us</h2>
+          <h2 className="section-main-title">{contactData.title}</h2>
 
           <p className="contact-subtitle">
-            Have a project in mind or want to know more?<br />
-            We'd love to hear from you!
+            {contactData.description}
           </p>
+
+          <div className="contact-guarantee-badge">
+            <Clock size={15} className="text-[#34d399]" />
+            <span>{contactData.responseBadge || 'Fast Response Guarantee: We reply within 2 business hours.'}</span>
+          </div>
 
           <div className="contact-methods-list">
             {/* Business Email */}
-            <a href="mailto:creftoofficial@gmail.com" className="contact-method-card">
+            <a href={`mailto:${contactData.email || 'creftoofficial@gmail.com'}`} className="contact-method-card">
               <div className="contact-method-icon">
                 <Mail size={20} className="text-white" />
               </div>
               <div className="contact-method-text">
-                <span className="contact-method-label">Business Email</span>
-                <span className="contact-method-val">creftoofficial@gmail.com</span>
+                <span className="contact-method-label">Official Inquiries</span>
+                <span className="contact-method-val">{contactData.email || 'creftoofficial@gmail.com'}</span>
               </div>
             </a>
 
             {/* WhatsApp / Phone */}
-            <a href="tel:9539572023" className="contact-method-card">
+            <a href={`tel:${(contactData.phone || '9539572023').replace(/[^0-9+]/g, '')}`} className="contact-method-card">
               <div className="contact-method-icon">
                 <Phone size={20} className="text-white" />
               </div>
               <div className="contact-method-text">
-                <span className="contact-method-label">WhatsApp / Phone</span>
-                <span className="contact-method-val">9539572023</span>
+                <span className="contact-method-label">Direct WhatsApp / Call</span>
+                <span className="contact-method-val">{contactData.phone || '+91 9539572023'}</span>
               </div>
             </a>
           </div>
         </div>
 
         {/* Right Column: Sleek Form Card */}
-        <div className="contact-form-col">
+        <div ref={formCardRef} className="contact-form-col">
           <div className="contact-form-card">
+            <div className="contact-form-header">
+              <span className="form-card-badge">
+                <Sparkles size={12} className="text-[#FF3838]" /> Direct Inquiry
+              </span>
+              <h3 className="form-card-title">Project Details</h3>
+            </div>
+
             <form onSubmit={handleSubmit} className="contact-form">
+              {/* Project Type Selector Chips */}
+              <div className="form-service-chips-wrapper">
+                <label className="form-chips-label">I'm interested in:</label>
+                <div className="form-service-chips">
+                  {serviceOptions.map((opt) => (
+                    <button
+                      type="button"
+                      key={opt}
+                      className={`service-chip-btn ${selectedService === opt ? 'active' : ''}`}
+                      onClick={() => setSelectedService(opt)}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="form-row">
                 <div className="form-group">
                   <input
@@ -95,7 +194,7 @@ export const Contact: React.FC = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Your Name"
+                    placeholder="Your Name *"
                     className="form-input"
                     required
                   />
@@ -107,7 +206,7 @@ export const Contact: React.FC = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Your Email"
+                    placeholder="Work Email Address *"
                     className="form-input"
                     required
                   />
@@ -120,11 +219,11 @@ export const Contact: React.FC = () => {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Your Message"
+                  placeholder="Tell us about your project, timeline, and goals... *"
                   rows={4}
                   className="form-textarea"
                   required
-                ></textarea>
+                />
               </div>
 
               {status && (
@@ -147,7 +246,7 @@ export const Contact: React.FC = () => {
                 icon={<Send size={16} />}
                 className="contact-submit-btn"
               >
-                {loading ? 'Sending...' : 'Send Message'}
+                {loading ? 'Submitting...' : 'Send Project Inquiry'}
               </Button>
             </form>
           </div>
@@ -156,3 +255,5 @@ export const Contact: React.FC = () => {
     </section>
   );
 };
+
+export default Contact;

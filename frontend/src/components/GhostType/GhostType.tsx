@@ -12,6 +12,7 @@ interface GhostTypeProps {
   showGhost?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  start?: boolean;
 }
 
 export const GhostType: React.FC<GhostTypeProps> = ({
@@ -25,17 +26,24 @@ export const GhostType: React.FC<GhostTypeProps> = ({
   showGhost = true,
   className = '',
   style,
+  start = true,
 }) => {
   const [charIndex, setCharIndex] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
 
   useEffect(() => {
+    if (!start) {
+      setIsStarted(false);
+      setCharIndex(0);
+      return;
+    }
+
     const startTimer = setTimeout(() => {
       setIsStarted(true);
     }, startDelay);
 
     return () => clearTimeout(startTimer);
-  }, [startDelay, text]);
+  }, [startDelay, text, start]);
 
   useEffect(() => {
     if (!isStarted) return;

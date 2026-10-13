@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 630 880" width="630" height="880">
+  <defs>
+    <linearGradient id="bgGradBack" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0d15"/>
+      <stop offset="50%" stop-color="#08080d"/>
+      <stop offset="100%" stop-color="#140b12"/>
+    </linearGradient>
+    <linearGradient id="lineGradBack" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF4E4E" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.1"/>
+    </linearGradient>
+    <pattern id="gridBack" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,56,56,0.04)" stroke-width="1"/>
+      <circle cx="30" cy="30" r="1" fill="rgba(255,56,56,0.1)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="630" height="880" rx="28" fill="url(#bgGradBack)"/>
+  <rect width="630" height="880" rx="28" fill="url(#gridBack)"/>
+
+  <!-- Outer Tech Border & Corner Accents -->
+  <rect x="18" y="18" width="594" height="844" rx="20" fill="none" stroke="rgba(255,56,56,0.2)" stroke-width="1.5"/>
+  <rect x="28" y="28" width="574" height="824" rx="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  
+  <!-- Corner Tech Brackets -->
+  <path d="M 32 60 L 32 32 L 60 32" fill="none" stroke="#FF4E4E" stroke-width="2.5"/>
+  <path d="M 570 32 L 598 32 L 598 60" fill="none" stroke="#FF4E4E" stroke-width="2.5"/>
+  <path d="M 32 820 L 32 848 L 60 848" fill="none" stroke="#FF4E4E" stroke-width="2.5"/>
+  <path d="M 570 848 L 598 848 L 598 820" fill="none" stroke="#FF4E4E" stroke-width="2.5"/>
+
+  <!-- Top Header Telemetry -->
+  <text x="48" y="66" font-family="monospace" font-size="12" font-weight="bold" fill="#FF4E4E" letter-spacing="3">CREFTO // TACTICAL DOSSIER</text>
+  <text x="582" y="66" text-anchor="end" font-family="monospace" font-size="11" font-weight="bold" fill="#10b981" letter-spacing="1">STATUS: VERIFIED &#x2713;</text>
+  <line x1="48" y1="80" x2="582" y2="80" stroke="url(#lineGradBack)" stroke-width="1"/>
+
+  <!-- Watermark Number -->
+  <text x="315" y="200" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="140" font-weight="900" fill="rgba(255,56,56,0.03)" letter-spacing="-6">02</text>
+
+  <!-- Header Block -->
+  <g transform="translate(48, 110)">
+    <rect x="0" y="0" width="110" height="24" rx="6" fill="rgba(255,56,56,0.15)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.5"/>
+    <text x="55" y="16" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#FF4E4E" letter-spacing="1.5">BLUEPRINT 002</text>
+
+    <text x="0" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="800" fill="#ffffff" letter-spacing="-0.5">UI/UX & Creative</text>
+    <text x="0" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="500" fill="rgba(255,255,255,0.6)">Sculpting unforgettable aesthetics with scientific UX conversion psychology.</text>
+  </g>
+
+  <!-- Technical Deliverables Checklist -->
+  <g transform="translate(48, 220)">
+    <text x="0" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#FF4E4E" letter-spacing="2">TECHNICAL DELIVERABLES &amp; ARTIFACTS</text>
+    <line x1="0" y1="26" x2="534" y2="26" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+    
+      <g transform="translate(0, 42)">
+        <rect width="534" height="38" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <circle cx="20" cy="19" r="5" fill="none" stroke="#FF4E4E" stroke-width="2"/>
+        <circle cx="20" cy="19" r="2.5" fill="#FF4E4E"/>
+        <text x="38" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="600" fill="#f1f5f9">Complete High-Fidelity Figma Library</text>
+        <text x="514" y="23" text-anchor="end" font-family="monospace" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.4)">FIGMA // DEV-READY</text>
+      </g>
+    
+      <g transform="translate(0, 88)">
+        <rect width="534" height="38" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <circle cx="20" cy="19" r="5" fill="none" stroke="#FF4E4E" stroke-width="2"/>
+        <circle cx="20" cy="19" r="2.5" fill="#FF4E4E"/>
+        <text x="38" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="600" fill="#f1f5f9">Interactive WebGL & Motion Prototypes</text>
+        <text x="514" y="23" text-anchor="end" font-family="monospace" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.4)">FRAMER // SPLINE</text>
+      </g>
+    
+      <g transform="translate(0, 134)">
+        <rect width="534" height="38" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <circle cx="20" cy="19" r="5" fill="none" stroke="#FF4E4E" stroke-width="2"/>
+        <circle cx="20" cy="19" r="2.5" fill="#FF4E4E"/>
+        <text x="38" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="600" fill="#f1f5f9">Semantic Design Tokens & Variables</text>
+        <text x="514" y="23" text-anchor="end" font-family="monospace" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.4)">CSS / JSON TOKENS</text>
+      </g>
+    
+      <g transform="translate(0, 180)">
+        <rect width="534" height="38" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <circle cx="20" cy="19" r="5" fill="none" stroke="#FF4E4E" stroke-width="2"/>
+        <circle cx="20" cy="19" r="2.5" fill="#FF4E4E"/>
+        <text x="38" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="600" fill="#f1f5f9">Multi-Device Responsive Breakpoint Specs</text>
+        <text x="514" y="23" text-anchor="end" font-family="monospace" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.4)">MOBILE // 4K DESKTOP</text>
+      </g>
+    
+  </g>
+
+  <!-- Tooling & Infrastructure Stack -->
+  <g transform="translate(48, 470)">
+    <text x="0" y="16" font-family="monospace" font-size="11" font-weight="bold" fill="#FF4E4E" letter-spacing="2">APPROVED STACK &amp; TOOLING</text>
+    <line x1="0" y1="26" x2="534" y2="26" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+    <g transform="translate(0, 40)">
+      
+          <g transform="translate(0, 0)">
+            <rect width="172.66666666666666" height="30" rx="6" fill="rgba(255,56,56,0.08)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.25"/>
+            <text x="86.33333333333333" y="19" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#ffffff">Figma</text>
+          </g>
+        
+          <g transform="translate(180.66666666666666, 0)">
+            <rect width="172.66666666666666" height="30" rx="6" fill="rgba(255,56,56,0.08)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.25"/>
+            <text x="86.33333333333333" y="19" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#ffffff">Spline</text>
+          </g>
+        
+          <g transform="translate(361.3333333333333, 0)">
+            <rect width="172.66666666666666" height="30" rx="6" fill="rgba(255,56,56,0.08)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.25"/>
+            <text x="86.33333333333333" y="19" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#ffffff">Tokens Studio</text>
+          </g>
+        
+          <g transform="translate(0, 38)">
+            <rect width="172.66666666666666" height="30" rx="6" fill="rgba(255,56,56,0.08)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.25"/>
+            <text x="86.33333333333333" y="19" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#ffffff">Adobe CC</text>
+          </g>
+        
+          <g transform="translate(180.66666666666666, 38)">
+            <rect width="172.66666666666666" height="30" rx="6" fill="rgba(255,56,56,0.08)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.25"/>
+            <text x="86.33333333333333" y="19" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#ffffff">Lottie</text>
+          </g>
+        
+          <g transform="translate(361.3333333333333, 38)">
+            <rect width="172.66666666666666" height="30" rx="6" fill="rgba(255,56,56,0.08)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.25"/>
+            <text x="86.33333333333333" y="19" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#ffffff">CSS3</text>
+          </g>
+        
+    </g>
+  </g>
+
+  <!-- SLA & KPI Guarantee Box -->
+  <g transform="translate(48, 605)">
+    <rect width="534" height="85" rx="12" fill="rgba(255,56,56,0.06)" stroke="#FF4E4E" stroke-width="1" stroke-opacity="0.3"/>
+    
+    <text x="24" y="32" font-family="monospace" font-size="10" font-weight="bold" fill="#FF4E4E" letter-spacing="2">EXECUTION SLA &amp; PERFORMANCE TARGET</text>
+    <text x="24" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="800" fill="#ffffff">WCAG AAA ACCESSIBILITY & 60 FPS MOTION</text>
+    <text x="510" y="58" text-anchor="end" font-family="monospace" font-size="12" font-weight="bold" fill="#10b981">2 - 3 WEEKS</text>
+  </g>
+
+  <!-- Back Axiom / Quote Box -->
+  <g transform="translate(48, 715)">
+    <rect width="534" height="75" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="20" y="34" font-family="serif" font-size="28" font-weight="bold" fill="#FF4E4E" opacity="0.6">“</text>
+    <text x="44" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="500" font-style="italic" fill="#cbd5e1">Good design is obvious. Great design is transparent.</text>
+    <text x="44" y="55" font-family="monospace" font-size="10" font-weight="bold" fill="#FF4E4E">— Joe Sparano</text>
+  </g>
+
+  <!-- Card Footer -->
+  <line x1="48" y1="826" x2="582" y2="826" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="48" y="850" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.4)" letter-spacing="1.5">CREFTO VERIFIED BLUEPRINT</text>
+  <text x="582" y="850" text-anchor="end" font-family="monospace" font-size="10" font-weight="bold" fill="#FF4E4E" letter-spacing="1">CLICK TO RETURN &#x27F3;</text>
+</svg>

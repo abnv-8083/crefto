@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 630 880" width="630" height="880">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12131e"/>
+      <stop offset="50%" stop-color="#08080c"/>
+      <stop offset="100%" stop-color="#160f18"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF3838" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.1"/>
+    </linearGradient>
+    <radialGradient id="glowCore" cx="50%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#FF3838" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse">
+      <path d="M 35 0 L 0 0 0 35" fill="none" stroke="rgba(255,255,255,0.035)" stroke-width="1"/>
+      <circle cx="35" cy="35" r="1" fill="rgba(255,255,255,0.12)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="630" height="880" rx="28" fill="url(#bgGrad)"/>
+  <rect width="630" height="880" rx="28" fill="url(#glowCore)"/>
+  <rect width="630" height="880" rx="28" fill="url(#grid)"/>
+
+  <!-- Outer Tech Border & Corner Accents -->
+  <rect x="18" y="18" width="594" height="844" rx="20" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+  <rect x="28" y="28" width="574" height="824" rx="14" fill="none" stroke="#FF3838" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="10 5"/>
+  
+  <!-- Corner Tech Brackets -->
+  <path d="M 32 60 L 32 32 L 60 32" fill="none" stroke="#FF3838" stroke-width="2.5"/>
+  <path d="M 570 32 L 598 32 L 598 60" fill="none" stroke="#FF3838" stroke-width="2.5"/>
+  <path d="M 32 820 L 32 848 L 60 848" fill="none" stroke="#FF3838" stroke-width="2.5"/>
+  <path d="M 570 848 L 598 848 L 598 820" fill="none" stroke="#FF3838" stroke-width="2.5"/>
+
+  <!-- Top Header Telemetry -->
+  <text x="48" y="66" font-family="monospace" font-size="12" font-weight="bold" fill="#FF3838" letter-spacing="3">CREFTO // PROTOCOL</text>
+  <text x="582" y="66" text-anchor="end" font-family="monospace" font-size="12" fill="rgba(255,255,255,0.4)" letter-spacing="2">PHASE // FRONT</text>
+  <line x1="48" y1="80" x2="582" y2="80" stroke="url(#lineGrad)" stroke-width="1"/>
+
+  <!-- Large Watermark Num -->
+  <text x="315" y="260" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="170" font-weight="900" fill="rgba(255,255,255,0.03)" letter-spacing="-6">01</text>
+
+  <!-- Center Emblem Symbolism -->
+  <g transform="translate(315, 205)">
+    <circle r="95" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <circle r="75" fill="rgba(255,56,56,0.04)" stroke="#FF3838" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="7 5"/>
+    <circle r="52" fill="#0d0e16" stroke="#FF3838" stroke-width="2"/>
+    <polygon points="0,-36 32,-18 32,18 0,36 -32,18 -32,-18" fill="none" stroke="#FF3838" stroke-width="1.5" stroke-opacity="0.8"/>
+    <text y="7" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" fill="#ffffff">01</text>
+  </g>
+
+  <!-- Content Block: Title & Tag -->
+  <g transform="translate(50, 330)">
+    <rect x="0" y="0" width="86" height="22" rx="6" fill="rgba(255,56,56,0.14)" stroke="#FF3838" stroke-width="1" stroke-opacity="0.4"/>
+    <text x="43" y="15" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="bold" fill="#FF3838" letter-spacing="1.5">PHASE 01</text>
+
+    <text x="0" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Discovery & Architecture</text>
+    <line x1="0" y1="68" x2="140" y2="68" stroke="#FF3838" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Dedicated Quote Section on Front -->
+  <g transform="translate(50, 435)">
+    <rect width="530" height="195" rx="14" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    
+    <!-- Quotation glyph -->
+    <text x="22" y="44" font-family="serif" font-size="44" font-weight="bold" fill="#FF3838" opacity="0.6">“</text>
+    
+    <!-- Quote text lines -->
+    
+      <text x="54" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" font-style="italic" fill="#f1f5f9">First, solve the problem.</text>
+    
+      <text x="54" y="64" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" font-style="italic" fill="#f1f5f9">Then, write the code.</text>
+    
+      <text x="54" y="88" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" font-style="italic" fill="#f1f5f9">Architecture turns vision into certainty.</text>
+    
+
+    <!-- Author & Context Badge -->
+    <line x1="22" y1="140" x2="508" y2="140" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="26" y="166" font-family="monospace" font-size="11" font-weight="bold" fill="#FF3838" letter-spacing="1.5">— John Johnson</text>
+    <text x="508" y="166" text-anchor="end" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.4)" letter-spacing="1">STRATEGY STANDARD</text>
+  </g>
+
+  <!-- Deliverables Checklist -->
+  <g transform="translate(50, 655)">
+    <text x="0" y="14" font-family="monospace" font-size="11" font-weight="bold" fill="rgba(255,255,255,0.45)" letter-spacing="1.5">CORE PILLARS</text>
+    
+      <g transform="translate(0, 28)">
+        <rect width="530" height="30" rx="7" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <circle cx="16" cy="15" r="3.5" fill="#FF3838"/>
+        <text x="32" y="19" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#cbd5e1">Technical Scope & Product Blueprinting</text>
+      </g>
+    
+      <g transform="translate(0, 66)">
+        <rect width="530" height="30" rx="7" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <circle cx="16" cy="15" r="3.5" fill="#FF3838"/>
+        <text x="32" y="19" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#cbd5e1">Scalable Information & Data Flow Schema</text>
+      </g>
+    
+      <g transform="translate(0, 104)">
+        <rect width="530" height="30" rx="7" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <circle cx="16" cy="15" r="3.5" fill="#FF3838"/>
+        <text x="32" y="19" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#cbd5e1">Conversion Architecture & KPI Mapping</text>
+      </g>
+    
+  </g>
+
+  <!-- Card Footer -->
+  <line x1="48" y1="814" x2="582" y2="814" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="48" y="840" font-family="monospace" font-size="10.5" fill="rgba(255,255,255,0.45)" letter-spacing="1.5">3D HOLOGRAPHIC FOIL</text>
+  <text x="582" y="840" text-anchor="end" font-family="monospace" font-size="10.5" font-weight="bold" fill="#FF3838" letter-spacing="1">CLICK TO FLIP &#x27F3;</text>
+</svg>

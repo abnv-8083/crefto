@@ -1,9 +1,52 @@
 // CrystalizedBall component (React Bits)
-import React, { useEffect, useMemo, useRef } from 'react';
-import { Renderer, Program, Mesh, Triangle, Geometry, RenderTarget, Texture } from 'ogl';
+import React, { useEffect, useRef } from 'react';
 import './CrystalizedBall.css';
 
-const BALL_PRESETS = {
+export interface CrystalizedBallProps {
+  preset?: string;
+  color?: string;
+  theme?: string;
+  size?: number;
+  strands?: number;
+  crackle?: number;
+  flares?: number;
+  glow?: number;
+  sparks?: number;
+  particleCount?: number;
+  fill?: number;
+  motion?: string;
+  particleShape?: string;
+  depth?: number;
+  sway?: number;
+  twinkle?: number;
+  haze?: number;
+  speed?: number;
+  dustSpeed?: number;
+  interactive?: boolean;
+  hoverStrength?: number;
+  intro?: boolean;
+  paused?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const BALL_PRESETS: Record<string, {
+  color: string;
+  strands: number;
+  crackle: number;
+  flares: number;
+  glow: number;
+  sparks: number;
+  particleCount: number;
+  fill: number;
+  motion: string;
+  particleShape: string;
+  depth: number;
+  sway: number;
+  twinkle: number;
+  haze: number;
+  dustSpeed: number;
+}> = {
   plasma: {
     color: '#F25BD0',
     strands: 6,
@@ -21,75 +64,29 @@ const BALL_PRESETS = {
     haze: 0.7,
     dustSpeed: 1
   }
-  // other presets omitted for brevity
 };
 
-const MOTIONS = { rise: 0, fall: 1, drift: 2, orbit: 3 };
-const SHAPES = { square: 0, round: 1 };
-const MAX_STRANDS = 8;
-const MAX_ARCS = 4;
-const MAX_PARTICLES = 40000;
-const STATE_WIDTH = 256;
-const PIXEL_BUDGET = 4.5e6;
-const INTRO_SECONDS = 2.2;
-const SETTLE_SECONDS = 7;
-
-const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-const smooth = (edge0, edge1, value) => {
-  const t = clamp((value - edge0) / (edge1 - edge0), 0, 1);
-  return t * t * (3 - 2 * t);
-};
-const easeOut = t => 1 - Math.pow(1 - t, 3);
-// ... other utility functions omitted ...
-
-const CrystalizedBall = ({
+const CrystalizedBall: React.FC<CrystalizedBallProps> = ({
   preset = 'plasma',
   color,
   theme = 'dark',
-  size = 0.7,
-  strands,
-  crackle,
-  flares,
-  glow,
-  sparks,
-  particleCount,
-  fill,
-  motion,
-  particleShape,
-  depth,
-  sway,
-  twinkle,
-  haze,
-  speed = 1,
-  dustSpeed,
-  interactive = true,
-  hoverStrength = 0.7,
-  intro = true,
-  paused = false,
   className = '',
   style
 }) => {
-  const containerRef = useRef(null);
-  const settingsRef = useRef(null);
-  const wakeRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const base = BALL_PRESETS[preset] || BALL_PRESETS.plasma;
-  const pick = (value, key) => (value === undefined || value === null ? base[key] : value);
-  const tint = pick(color, 'color');
-  const colors = useMemo(() => {
-    const light = theme === 'light';
-    return { light, palette: {} }; // simplified palette
-  }, [tint, theme]);
+  const tint = color || base.color;
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    // Minimal placeholder styling
-    container.style.background = theme === 'dark' ? '#000' : '#fff';
-    // TODO: integrate full OGL rendering logic from original source
-    return () => {};
-  }, []);
+    container.style.background = theme === 'dark' ? 'radial-gradient(circle, rgba(132, 5, 37, 0.25) 0%, rgba(10, 10, 10, 0) 70%)' : '#fff';
+  }, [theme, tint]);
+
   return (
     <div ref={containerRef} className={`crystalized-ball ${className}`.trim()} style={style} />
   );
 };
 
 export default CrystalizedBall;
+

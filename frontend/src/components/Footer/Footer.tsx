@@ -1,7 +1,12 @@
 import React from 'react';
-import { Linkedin, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Linkedin, Instagram, Twitter, ArrowUp, ArrowRight, Shield } from 'lucide-react';
+import { Button } from '../Button/Button';
+import { useContent } from '../../context/ContentContext';
 
 export const Footer: React.FC = () => {
+  const { content } = useContent();
+  const footerData = content.footer;
+
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const target = document.querySelector(href);
@@ -10,30 +15,52 @@ export const Footer: React.FC = () => {
     }
   };
 
+  const handleBackToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="footer-wrapper">
+      {/* Pre-footer Call-To-Action Banner */}
+      <div className="footer-cta-banner">
+        <div className="footer-cta-container">
+          <div className="footer-cta-text-box">
+            <span className="footer-cta-pill">START THE CONVERSATION</span>
+            <h2 className="footer-cta-title">Ready to Transform Your Digital Presence?</h2>
+            <p className="footer-cta-desc">
+              Partner with Crefto to launch an award-winning web platform tailored to drive scalable business growth.
+            </p>
+          </div>
+          <div className="footer-cta-btn-box">
+            <Button
+              variant="primary"
+              size="lg"
+              icon={<ArrowRight size={18} />}
+              onClick={() => {
+                const el = document.getElementById('contact');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Get in Touch Today
+            </Button>
+          </div>
+        </div>
+      </div>
+
       <div className="footer-container">
-        {/* Top section */}
+        {/* Main Footer Row */}
         <div className="footer-top-row">
           {/* Logo & ChargeEase branding */}
           <div className="footer-brand">
             <div className="footer-brand-header">
-              <div className="logo-symbol-wrapper">
-                <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M19 15C13.5 15 9 19.5 9 25C9 30.5 13.5 35 19 35C23.2 35 26.8 32.3 28.2 28.5H22.5C21.7 30 20.4 30.8 19 30.8C15.8 30.8 13.2 28.2 13.2 25C13.2 21.8 15.8 19.2 19 19.2C20.5 19.2 21.8 20.1 22.6 21.5H28.3C26.9 17.7 23.3 15 19 15Z"
-                    fill="#FF3838"
-                  />
-                  <path
-                    d="M25 21.5V35H29.2V27.2C30.4 25.5 32.3 24.5 34.5 24.5H38V20.2H34.5C31.2 20.2 28.5 21.8 27.2 24.2V21.5H25Z"
-                    fill="#FF3838"
-                  />
-                  <circle cx="37" cy="18" r="3" fill="#FF3838" />
-                </svg>
-              </div>
-              <span className="footer-brand-title">Crefto</span>
+              <a href="#home" onClick={(e) => handleScrollTo(e, '#home')} className="footer-logo-link" title="Crefto Home">
+                <img src="/logo/logo-dark.png" alt="Crefto Logo" className="footer-brand-logo-img" />
+              </a>
             </div>
-            <span className="footer-subtag">A ChargeEase Company</span>
+            <span className="footer-subtag">{footerData?.subtagline || 'A ChargeEase Company'}</span>
+            <p className="footer-brand-tagline">
+              {footerData?.tagline || 'Bespoke Web Development & High-Performance Cloud Architecture.'}
+            </p>
           </div>
 
           {/* Navigation Links */}
@@ -41,33 +68,60 @@ export const Footer: React.FC = () => {
             <a href="#home" onClick={(e) => handleScrollTo(e, '#home')}>Home</a>
             <a href="#about" onClick={(e) => handleScrollTo(e, '#about')}>About</a>
             <a href="#services" onClick={(e) => handleScrollTo(e, '#services')}>Services</a>
-            <a href="#projects" onClick={(e) => handleScrollTo(e, '#projects')}>Projects</a>
+            <a href="#process" onClick={(e) => handleScrollTo(e, '#process')}>Process</a>
+            <a href="#projects" onClick={(e) => handleScrollTo(e, '#projects')}>Work</a>
+            <a href="#advantages" onClick={(e) => handleScrollTo(e, '#advantages')}>Advantages</a>
             <a href="#contact" onClick={(e) => handleScrollTo(e, '#contact')}>Contact</a>
           </nav>
 
-          {/* Social Icons */}
-          <div className="footer-socials">
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="social-icon-btn">
-              <Linkedin size={18} />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" className="social-icon-btn">
-              <Instagram size={18} />
-            </a>
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" className="social-icon-btn">
-              <Facebook size={18} />
-            </a>
-            <a href="https://x.com" target="_blank" rel="noreferrer" aria-label="X (Twitter)" className="social-icon-btn">
-              <Twitter size={18} />
-            </a>
+          {/* Social Icons & Back to Top */}
+          <div className="footer-socials-col">
+            <div className="footer-socials">
+              <a href={footerData?.socials?.linkedin || 'https://linkedin.com'} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="social-icon-btn">
+                <Linkedin size={18} />
+              </a>
+              <a href={footerData?.socials?.instagram || 'https://instagram.com'} target="_blank" rel="noreferrer" aria-label="Instagram" className="social-icon-btn">
+                <Instagram size={18} />
+              </a>
+              <a href={footerData?.socials?.twitter || 'https://x.com'} target="_blank" rel="noreferrer" aria-label="X (Twitter)" className="social-icon-btn">
+                <Twitter size={18} />
+              </a>
+            </div>
+
+            <button
+              onClick={handleBackToTop}
+              className="back-to-top-btn"
+              aria-label="Back to top"
+            >
+              <span>Back to Top</span>
+              <ArrowUp size={14} />
+            </button>
           </div>
         </div>
 
+        {/* Large Typographic Brand Watermark */}
+        <div className="footer-watermark-wrap" aria-hidden="true">
+          <span className="footer-watermark-text">CREFTO</span>
+        </div>
+
         {/* Bottom divider & copyright */}
-        <div className="footer-divider"></div>
+        <div className="footer-divider" />
         <div className="footer-bottom">
-          <p>© 2025 Crefto. All rights reserved.</p>
+          <p>{footerData?.copyright || `© ${new Date().getFullYear()} CREFTO. All rights reserved. Built under the ChargeEase ecosystem.`}</p>
+          <div className="footer-legal-links">
+            <span>Privacy Policy</span>
+            <span className="dot-sep">•</span>
+            <span>Terms of Service</span>
+            <span className="dot-sep">•</span>
+            <a href="#/admin" className="admin-portal-badge-link" title="Open Admin CMS">
+              <Shield size={12} className="text-[#FF3838]" />
+              <span>Admin Portal</span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>
   );
 };
+
+export default Footer;
