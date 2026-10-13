@@ -633,7 +633,7 @@ export const defaultSiteContent: ISiteContent = {
 };
 
 const STORAGE_KEY = 'crefto_site_content_v1';
-const API_BASE = 'http://localhost:5000/api/content';
+const API_BASE = import.meta.env.VITE_API_CONTENT_URL || '/api/content';
 
 interface ContentContextType {
   content: ISiteContent;
