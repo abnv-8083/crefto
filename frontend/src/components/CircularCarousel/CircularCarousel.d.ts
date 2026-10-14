@@ -1,4 +1,4 @@
-﻿import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC } from 'react';
 
 export interface CarouselItem {
   src: string;
@@ -9,7 +9,7 @@ export interface CarouselItem {
 
 export interface CircularCarouselProps {
   items?: CarouselItem[];
-  preset?: 'cylinder' | 'orbit' | 'wheel' | 'panorama';
+  preset?: 'cylinder' | 'orbit' | 'wheel' | 'panorama' | 'oval';
   intro?: 'assemble' | 'rise' | 'spin' | 'none';
   cardWidth?: number;
   aspectRatio?: number;
@@ -17,6 +17,9 @@ export interface CircularCarouselProps {
   curve?: number;
   tilt?: number;
   perspective?: number;
+  oval?: boolean;
+  ovalX?: number;
+  ovalZ?: number;
   autoplay?: 'drift' | 'step' | 'off';
   speed?: number;
   interval?: number;

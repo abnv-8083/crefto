@@ -113,6 +113,20 @@ const PRESETS = {
     billboard: false,
     backfaces: false,
     window: 0
+  },
+  oval: {
+    axis: 'y',
+    tilt: -4,
+    perspective: 2400,
+    curve: 0,
+    spread: 1.25,
+    inward: false,
+    billboard: false,
+    backfaces: true,
+    window: 0,
+    oval: true,
+    ovalX: 1.85,
+    ovalZ: 0.52
   }
 };
 
@@ -186,6 +200,9 @@ const CircularCarousel = ({
   curve,
   tilt,
   perspective,
+  oval,
+  ovalX,
+  ovalZ,
   autoplay = 'drift',
   speed = 14,
   interval = 3,
@@ -213,6 +230,9 @@ const CircularCarousel = ({
   const count = list.length;
   const shape = PRESETS[preset] ? preset : 'cylinder';
   const layout = PRESETS[shape];
+  const isOval = Boolean(oval ?? layout.oval ?? (shape === 'oval'));
+  const ovalXFactor = ovalX ?? layout.ovalX ?? 1.85;
+  const ovalZFactor = ovalZ ?? layout.ovalZ ?? 0.52;
   const axis = layout.axis;
   const tiltValue = tilt ?? layout.tilt;
   const curveValue = layout.billboard ? 0 : clamp(curve ?? layout.curve, 0, 1);
@@ -311,7 +331,10 @@ const CircularCarousel = ({
     stretch: reduced ? 0 : clamp(stretch, 0, 1),
     depthFade: clamp(depthFade, 0, 1),
     captions,
-    reduced
+    reduced,
+    isOval,
+    ovalX: ovalXFactor,
+    ovalZ: ovalZFactor
   };
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -427,13 +450,29 @@ const CircularCarousel = ({
             let p;
             if (s.axis === 'x') {
               p = rotateY(rotateX([cx, cy, s.radius], -a), s.tilt);
+              p = [p[0], p[1], p[2] - s.radius];
+            } else if (s.isOval) {
+              const rad = a * TO_RAD;
+              const Rx = s.radius * s.ovalX;
+              const Rz = s.radius * s.ovalZ;
+              const cxCenter = Rx * Math.sin(rad);
+              const czCenter = Rz * Math.cos(rad);
+              const rotY = (Math.atan2(Rz * Math.sin(rad), Rx * Math.cos(rad)) * 180) / Math.PI;
+              const rotYRad = rotY * TO_RAD;
+              const cosR = Math.cos(rotYRad);
+              const sinR = Math.sin(rotYRad);
+              const localX = cx * cosR;
+              const localZ = -cx * sinR;
+              p = rotateX([cxCenter + localX, cy, czCenter + localZ], s.tilt);
+              p = [p[0], p[1], p[2] - Rz];
             } else if (s.layout.billboard) {
               const c = rotateY([0, 0, s.radius], a);
               p = rotateX([c[0] + cx, cy, c[2]], s.tilt);
+              p = [p[0], p[1], p[2] - s.radius];
             } else {
               p = rotateX(rotateY([cx, cy, s.radius], a), s.tilt);
+              p = [p[0], p[1], p[2] - s.radius];
             }
-            p = [p[0], p[1], p[2] - s.radius];
             if (p[2] >= P * 0.95) continue;
             const k = P / (P - p[2]);
             minX = Math.min(minX, p[0] * k);
@@ -562,6 +601,10 @@ const CircularCarousel = ({
       } else if (s.layout.inward) {
         camera.style.transform = `translate3d(0, 0, ${s.perspective - 1}px) rotateX(${s.tilt + state.pitch}deg) rotateY(${state.yaw}deg)`;
         ring.style.transform = `rotateY(${angle}deg)`;
+      } else if (s.isOval) {
+        const Rz = s.radius * swell * s.ovalZ;
+        camera.style.transform = `translate3d(0, 0, ${-Rz}px) rotateX(${s.tilt + state.pitch}deg) rotateY(${state.yaw}deg)`;
+        ring.style.transform = 'none';
       } else {
         camera.style.transform = `translate3d(0, 0, ${-R}px) rotateX(${s.tilt + state.pitch}deg) rotateY(${state.yaw}deg)`;
         ring.style.transform = `rotateY(${angle}deg)`;
@@ -572,17 +615,34 @@ const CircularCarousel = ({
         if (!card) continue;
         const base = index * s.step;
         const mod = introCard(elapsed, base);
-        const r = R * mod.radius;
         let transform;
-        if (s.axis === 'x') {
-          transform = `rotateX(${-base}deg) translateZ(${r}px)`;
-        } else if (s.layout.inward) {
-          transform = `rotateY(${base}deg) translateZ(${-r}px)`;
+
+        if (s.isOval) {
+          const currentAngle = base + angle;
+          const theta = currentAngle * TO_RAD;
+          const Rx = s.radius * swell * s.ovalX * mod.radius;
+          const Rz = s.radius * swell * s.ovalZ * mod.radius;
+          const cardX = Rx * Math.sin(theta);
+          const cardZ = Rz * Math.cos(theta);
+          const normalAngle = (Math.atan2(Rz * Math.sin(theta), Rx * Math.cos(theta)) * 180) / Math.PI;
+          const cardRotY = s.layout.billboard ? 0 : normalAngle;
+          const lift = mod.lift || 0;
+
+          transform = `translate3d(${cardX.toFixed(2)}px, ${lift.toFixed(2)}px, ${cardZ.toFixed(2)}px) rotateY(${cardRotY.toFixed(2)}deg)`;
+          card.style.zIndex = String(Math.round((Math.cos(theta) + 1) * 100));
         } else {
-          transform = `rotateY(${base}deg) translateZ(${r}px)`;
-          if (s.layout.billboard) transform += ` rotateY(${-(base + angle)}deg)`;
+          const r = R * mod.radius;
+          if (s.axis === 'x') {
+            transform = `rotateX(${-base}deg) translateZ(${r}px)`;
+          } else if (s.layout.inward) {
+            transform = `rotateY(${base}deg) translateZ(${-r}px)`;
+          } else {
+            transform = `rotateY(${base}deg) translateZ(${r}px)`;
+            if (s.layout.billboard) transform += ` rotateY(${-(base + angle)}deg)`;
+          }
+          if (mod.lift) transform += s.axis === 'x' ? ` translateX(${mod.lift}px)` : ` translateY(${mod.lift}px)`;
         }
-        if (mod.lift) transform += s.axis === 'x' ? ` translateX(${mod.lift}px)` : ` translateY(${mod.lift}px)`;
+
         card.style.transform = transform;
 
         const world = wrap(base + angle);
@@ -647,7 +707,8 @@ const CircularCarousel = ({
       const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : 0;
       if (!delta) return;
       event.preventDefault();
-      const perPixel = 180 / (Math.PI * s.radius * state.fit);
+      const effectiveRadius = s.isOval ? s.radius * s.ovalX : s.radius;
+      const perPixel = 180 / (Math.PI * effectiveRadius * state.fit);
       state.target = null;
       state.angle -= delta * perPixel * (s.layout.inward ? -1 : 1);
       state.velocity = -delta * perPixel * (s.layout.inward ? -1 : 1) * 30;
@@ -679,7 +740,7 @@ const CircularCarousel = ({
   useLayoutEffect(() => {
     measureRef.current();
     wakeRef.current();
-  }, [radius, cardW, cardH, tiltValue, perspective, preset, captions, count]);
+  }, [radius, cardW, cardH, tiltValue, perspective, preset, captions, count, isOval, ovalXFactor, ovalZFactor]);
 
   useEffect(() => {
     wakeRef.current();
@@ -756,7 +817,8 @@ const CircularCarousel = ({
         rootRef.current.setPointerCapture(event.pointerId);
       } catch {}
     }
-    const perPixel = 180 / (Math.PI * s.radius * state.fit);
+    const effectiveRadius = s.isOval ? s.radius * s.ovalX : s.radius;
+    const perPixel = 180 / (Math.PI * effectiveRadius * state.fit);
     state.angle = press.angle + (delta - press.origin) * perPixel * (s.layout.inward ? -1 : 1);
     const now = performance.now();
     press.samples.push({ time: now, angle: state.angle });

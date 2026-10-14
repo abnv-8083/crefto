@@ -102,11 +102,11 @@ export const Services: React.FC = () => {
         <div ref={carouselWrapRef} className="services-carousel-wrap">
           <CircularCarousel
             items={carouselItems}
-            preset="cylinder"
+            preset="oval"
             intro="rise"
-            cardWidth={300}
+            cardWidth={290}
             aspectRatio={0.72}
-            gap={28}
+            gap={32}
             speed={10}
             autoplay="drift"
             captions
