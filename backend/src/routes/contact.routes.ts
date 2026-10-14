@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { handleContactForm } from '../controllers/contact.controller';
+import { handleContactForm, getContacts } from '../controllers/contact.controller';
 
 const router = Router();
 
 router.post('/', handleContactForm);
+router.get('/', getContacts);
 
 export default router;

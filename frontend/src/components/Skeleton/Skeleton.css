@@ -1,0 +1,171 @@
+/* ==========================================================================
+   CREFTO PREMIUM SKELETON SHIMMER SYSTEM
+   ========================================================================== */
+
+@keyframes creftoSkeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes creftoSkeletonPulse {
+  0%, 100% {
+    opacity: 0.85;
+    border-color: rgba(255, 56, 56, 0.08);
+  }
+  50% {
+    opacity: 1;
+    border-color: rgba(255, 56, 56, 0.22);
+  }
+}
+
+.crefto-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.07) 20%,
+    rgba(255, 56, 56, 0.12) 50%,
+    rgba(255, 255, 255, 0.07) 80%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: creftoSkeletonShimmer 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: inline-block;
+  user-select: none;
+}
+
+/* Variants */
+.crefto-skeleton-text {
+  height: 14px;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.crefto-skeleton-title {
+  height: 28px;
+  width: 75%;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.crefto-skeleton-rectangular {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.crefto-skeleton-circular {
+  border-radius: 50%;
+}
+
+.crefto-skeleton-pill {
+  border-radius: 9999px;
+  height: 32px;
+  width: 140px;
+}
+
+.crefto-skeleton-badge {
+  border-radius: 4px;
+  height: 20px;
+  width: 80px;
+}
+
+.crefto-skeleton-card {
+  border-radius: 16px;
+  background: rgba(12, 12, 18, 0.85);
+  border: 1px solid rgba(255, 56, 56, 0.12);
+  animation: creftoSkeletonPulse 2.8s ease-in-out infinite;
+  padding: 24px;
+}
+
+/* ==========================================================================
+   SKELETON IMAGE COMPONENT
+   ========================================================================== */
+.skeleton-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0d0d14;
+}
+
+.skeleton-image-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: opacity 0.4s ease-out;
+}
+
+.skeleton-image-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.skeleton-image-element.loaded {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   CONTENT SKELETON FULL LOADER
+   ========================================================================== */
+.content-skeleton-overlay {
+  width: 100%;
+  min-height: 100vh;
+  background: #050508;
+  color: #fff;
+  padding: 100px 24px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.content-skeleton-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.content-skeleton-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 30px;
+}
+
+.content-skeleton-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.content-skeleton-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .content-skeleton-telemetry-grid {
+    grid-template-columns: 1fr;
+  }
+}

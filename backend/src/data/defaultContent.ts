@@ -74,7 +74,7 @@ export const defaultSiteContent: ISiteContent = {
         description:
           'Modern, responsive, and user-centric websites crafted from scratch to establish unshakeable digital authority.',
         tags: ['Design System', 'Custom Motion', 'Responsive UI'],
-        src: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=900&q=80&auto=format&fit=max',
+        src: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969441/ar5jvwgw/services/web-design.jpg',
         alt: 'Web design workspace',
       },
       {
@@ -85,7 +85,7 @@ export const defaultSiteContent: ISiteContent = {
         description:
           'Turn clicks into customers. Built for service providers, agencies, and brands requiring continuous lead conversion.',
         tags: ['Lead Funnels', 'Local & Global SEO', 'Speed Optimization'],
-        src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format&fit=max',
+        src: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969442/ar5jvwgw/services/business-websites.jpg',
         alt: 'Business office environment',
       },
       {
@@ -96,7 +96,7 @@ export const defaultSiteContent: ISiteContent = {
         description:
           'Complex SaaS portals, admin dashboards, and custom cloud tools tailored to automate and accelerate your operations.',
         tags: ['Database Architecture', 'Secure Auth', 'REST & GraphQL'],
-        src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80&auto=format&fit=max',
+        src: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969444/ar5jvwgw/services/web-apps.jpg',
         alt: 'Cloud computing centre',
       },
       {
@@ -107,7 +107,7 @@ export const defaultSiteContent: ISiteContent = {
         description:
           'Transform dated interfaces into cutting-edge, fluid WebGL and GSAP powered experiences without losing SEO rankings.',
         tags: ['Legacy Migration', 'UI/UX Refresh', 'Performance Boost'],
-        src: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=900&q=80&auto=format&fit=max',
+        src: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969446/ar5jvwgw/services/website-redesign.jpg',
         alt: 'Modern architectural redesign',
       },
       {
@@ -118,7 +118,7 @@ export const defaultSiteContent: ISiteContent = {
         description:
           'Keep your digital flagship secure, updated, and lightning-fast. Backed by ChargeEase institutional reliability.',
         tags: ['Automated Backups', 'Security Audits', 'Zero Downtime'],
-        src: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=900&q=80&auto=format&fit=max',
+        src: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969447/ar5jvwgw/services/maintenance-support.jpg',
         alt: 'Security shield concept',
       },
       {
@@ -129,7 +129,7 @@ export const defaultSiteContent: ISiteContent = {
         description:
           'Tailored payment gateway integrations, headless CMS architectures, and custom workflows for unique requirements.',
         tags: ['Payment Stripe/Razorpay', 'Headless CMS', 'Custom Integrations'],
-        src: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=80&auto=format&fit=max',
+        src: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969449/ar5jvwgw/services/customized-solutions.jpg',
         alt: 'Engineering and technology',
       },
     ],
@@ -259,7 +259,7 @@ export const defaultSiteContent: ISiteContent = {
         category: 'Business Website',
         url: 'artisanoven.com',
         metric: '+180% Online Orders',
-        image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1000&q=80&auto=format&fit=crop',
+        image: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969450/ar5jvwgw/projects/bakery-website.jpg',
         description:
           'An enticing and modern online storefront for an artisan bakery featuring real-time menu management, table reservations, and local SEO.',
         fullCaseStudy:
@@ -283,7 +283,7 @@ export const defaultSiteContent: ISiteContent = {
         category: 'Web Application',
         url: 'apexcloud.io',
         metric: 'Real-time Telemetry',
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&q=80&auto=format&fit=crop',
+        image: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969452/ar5jvwgw/projects/admin-dashboard.jpg',
         description:
           'Enterprise analytics and operations dashboard with real-time WebSocket charts, role-based authentication, and automated billing metrics.',
         fullCaseStudy:
@@ -307,7 +307,7 @@ export const defaultSiteContent: ISiteContent = {
         category: 'Business Website',
         url: 'novastudio.design',
         metric: '⚡ 99/100 Lighthouse',
-        image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=1000&q=80&auto=format&fit=crop',
+        image: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969454/ar5jvwgw/projects/nova-portfolio.jpg',
         description:
           'A cutting-edge agency portfolio featuring fluid WebGL transitions, dynamic case studies, and smooth micro-interactions that elevate brand authority.',
         fullCaseStudy:
@@ -331,7 +331,7 @@ export const defaultSiteContent: ISiteContent = {
         category: 'Web Application',
         url: 'pulsefitness.app',
         metric: '5,000+ Active Members',
-        image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1000&q=80&auto=format&fit=crop',
+        image: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969456/ar5jvwgw/projects/pulse-fitness.jpg',
         description:
           'Full-featured health and fitness club platform with automated class booking, subscription billing, and mobile-friendly workout tracking.',
         fullCaseStudy:
@@ -355,7 +355,7 @@ export const defaultSiteContent: ISiteContent = {
         category: 'E-Commerce',
         url: 'luminashops.store',
         metric: '+210% Checkout Conv.',
-        image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1000&q=80&auto=format&fit=crop',
+        image: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969457/ar5jvwgw/projects/lumina-ecom.jpg',
         description:
           'High-end luxury apparel e-commerce store with 3D product previews, instant faceted filtering, and zero-latency checkout.',
         fullCaseStudy:
@@ -379,7 +379,7 @@ export const defaultSiteContent: ISiteContent = {
         category: 'Business Website',
         url: 'vanguardrealty.com',
         metric: 'Instant Lead Capture',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=80&auto=format&fit=crop',
+        image: 'https://res.cloudinary.com/ar5jvwgw/image/upload/v1791969460/ar5jvwgw/projects/vanguard-realty.jpg',
         description:
           'High-conversion real estate platform with interactive map filtering, virtual property tours, and automated CRM lead distribution.',
         fullCaseStudy:

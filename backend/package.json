@@ -6,16 +6,23 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "db:check": "ts-node-dev --transpile-only src/scripts/check-db.ts",
+    "db:migrate-cloud": "ts-node-dev --transpile-only src/scripts/seed-and-migrate.ts",
+    "cloudinary:check": "ts-node-dev --transpile-only src/scripts/check-cloudinary.ts"
   },
   "dependencies": {
+    "cloudinary": "^2.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "mongoose": "^9.11.2",
+    "multer": "^2.4.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/multer": "^2.3.0",
     "@types/node": "^22.7.4",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"

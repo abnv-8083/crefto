@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import { ISiteContent } from '../models/Content';
+import { ISiteContent, SiteContent } from '../models/Content';
 import { defaultSiteContent } from '../data/defaultContent';
+import { isDBConnected } from '../config/db';
 
 export class ContentRepository {
   private dataDir: string;
@@ -29,33 +30,72 @@ export class ContentRepository {
         this.memoryCache = defaultSiteContent;
       }
     } catch (err) {
-      console.warn('ContentRepository: File IO error, using in-memory defaults', err);
+      console.warn('[ContentRepository] File IO error, using in-memory defaults:', err);
       this.memoryCache = defaultSiteContent;
     }
   }
 
   public async getContent(): Promise<ISiteContent> {
+    // 1. Try MongoDB first if connected
+    if (isDBConnected()) {
+      try {
+        const doc = await SiteContent.findOne({ key: 'global' });
+        if (doc && doc.data) {
+          this.memoryCache = doc.data as ISiteContent;
+          return this.memoryCache;
+        }
+
+        // Document not found in DB yet - seed default into MongoDB
+        console.log('[ContentRepository] Seeding default site content to MongoDB...');
+        const seeded = await SiteContent.create({
+          key: 'global',
+          data: this.memoryCache || defaultSiteContent,
+        });
+        return seeded.data as ISiteContent;
+      } catch (err) {
+        console.error('[ContentRepository] MongoDB query failed, falling back to local cache:', err);
+      }
+    }
+
+    // 2. Fallback to local JSON file or memory cache
     try {
       if (fs.existsSync(this.filePath)) {
         const fileData = await fs.promises.readFile(this.filePath, 'utf-8');
         this.memoryCache = JSON.parse(fileData);
       }
     } catch {
-      // Fallback to memory cache
+      // Memory cache is already available
     }
+
     return this.memoryCache;
   }
 
   public async saveContent(newContent: ISiteContent): Promise<ISiteContent> {
     this.memoryCache = newContent;
+
+    // 1. Update in MongoDB if connected
+    if (isDBConnected()) {
+      try {
+        await SiteContent.findOneAndUpdate(
+          { key: 'global' },
+          { data: newContent },
+          { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
+      } catch (err) {
+        console.error('[ContentRepository] Failed to persist content to MongoDB:', err);
+      }
+    }
+
+    // 2. Also persist to local file as backup cache
     try {
       if (!fs.existsSync(this.dataDir)) {
         fs.mkdirSync(this.dataDir, { recursive: true });
       }
       await fs.promises.writeFile(this.filePath, JSON.stringify(newContent, null, 2), 'utf-8');
     } catch (err) {
-      console.error('Failed to write content to disk:', err);
+      console.error('[ContentRepository] Failed to write content to local disk cache:', err);
     }
+
     return this.memoryCache;
   }
 

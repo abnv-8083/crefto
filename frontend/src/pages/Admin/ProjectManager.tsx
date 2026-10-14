@@ -19,6 +19,7 @@ import {
   Sliders,
 } from 'lucide-react';
 import { IProjectsContent, IProjectItem } from '../../context/ContentContext';
+import { uploadImageToCloudinary } from '../../services/api';
 import './ProjectManager.css';
 
 interface ProjectManagerProps {
@@ -197,7 +198,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({
     showToast('New project created! Ready for image upload.', 'success');
   };
 
-  // Handle image file upload (via file input or drag-and-drop)
+  // Handle image file upload (via file input or drag-and-drop to Cloudinary)
   const handleImageFile = async (index: number, file: File) => {
     if (!file.type.startsWith('image/')) {
       showToast('Please upload a valid image file (PNG, JPG, WebP, SVG)', 'error');
@@ -208,9 +209,20 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({
     setProcessingImageId(projId);
 
     try {
+      // 1. Upload to Cloudinary CDN
+      try {
+        const uploadRes = await uploadImageToCloudinary(file, 'projects');
+        updateProject(index, { image: uploadRes.secure_url });
+        showToast('Image uploaded to Cloudinary CDN successfully!', 'success');
+        return;
+      } catch (cloudErr) {
+        console.warn('Cloudinary API error, falling back to local optimization:', cloudErr);
+      }
+
+      // 2. Fallback to client-side optimized dataUrl if upload endpoint is offline
       const optimizedDataUrl = await processAndOptimizeImage(file);
       updateProject(index, { image: optimizedDataUrl });
-      showToast('Project cover image uploaded and optimized successfully!', 'success');
+      showToast('Image optimized and loaded locally.', 'success');
     } catch {
       showToast('Failed to process image. Please try again.', 'error');
     } finally {
@@ -474,7 +486,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({
                           {isProcessing && (
                             <div className="preview-loading-overlay">
                               <RefreshCw size={24} className="spin-icon" />
-                              <span>Optimizing image...</span>
+                              <span>Uploading to Cloudinary...</span>
                             </div>
                           )}
                         </div>

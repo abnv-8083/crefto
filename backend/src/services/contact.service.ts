@@ -1,11 +1,11 @@
-import { ContactRepository } from '../repositories/contact.repository';
+import { ContactRepository, contactRepository } from '../repositories/contact.repository';
 import { IContact } from '../models/Contact';
 
 export class ContactService {
   private contactRepo: ContactRepository;
 
   constructor() {
-    this.contactRepo = new ContactRepository();
+    this.contactRepo = contactRepository;
   }
 
   async processContactSubmission(data: IContact): Promise<{ success: boolean; message: string; contact?: IContact }> {
@@ -19,5 +19,9 @@ export class ContactService {
       message: 'Thank you for reaching out to Crefto. We will contact you soon!',
       contact: saved,
     };
+  }
+
+  async getAllContacts(): Promise<IContact[]> {
+    return this.contactRepo.findAll();
   }
 }

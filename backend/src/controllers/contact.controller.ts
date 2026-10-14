@@ -5,9 +5,18 @@ const contactService = new ContactService();
 
 export const handleContactForm = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { name, email, message } = req.body;
-    const result = await contactService.processContactSubmission({ name, email, message });
+    const { name, email, message, service } = req.body;
+    const result = await contactService.processContactSubmission({ name, email, message, service });
     res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getContacts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const contacts = await contactService.getAllContacts();
+    res.status(200).json({ success: true, count: contacts.length, data: contacts });
   } catch (error) {
     next(error);
   }

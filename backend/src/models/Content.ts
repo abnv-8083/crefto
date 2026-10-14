@@ -155,3 +155,35 @@ export interface ISiteContent {
   contact: IContactContent;
   footer: IFooterContent;
 }
+
+import mongoose, { Schema, Document, Model } from 'mongoose';
+
+export interface ISiteContentDocument extends Document {
+  key: string;
+  data: ISiteContent;
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+const SiteContentSchema = new Schema<ISiteContentDocument>(
+  {
+    key: {
+      type: String,
+      required: true,
+      unique: true,
+      default: 'global',
+      index: true,
+    },
+    data: {
+      type: Schema.Types.Mixed,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const SiteContent: Model<ISiteContentDocument> =
+  mongoose.models.SiteContent || mongoose.model<ISiteContentDocument>('SiteContent', SiteContentSchema);
+

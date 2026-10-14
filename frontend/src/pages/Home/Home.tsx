@@ -9,12 +9,15 @@ import { Projects } from '../../sections/Projects/Projects';
 import { Advantages } from '../../sections/Advantages/Advantages';
 import { Contact } from '../../sections/Contact/Contact';
 import { Footer } from '../../components/Footer/Footer';
+import { ContentSkeletonLoader } from '../../components/Skeleton';
+import { useContent } from '../../context/ContentContext';
 
 interface HomeProps {
   isLoaded?: boolean;
 }
 
 export const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
+  const { loading } = useContent();
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
@@ -42,16 +45,24 @@ export const Home: React.FC<HomeProps> = ({ isLoaded = true }) => {
   return (
     <div className="crefto-app-wrapper">
       <Navbar activeSection={activeSection} />
-      <main className="main-content">
-        <Hero isLoaded={isLoaded} />
-        <MarqueeTicker />
-        <About />
-        <Services />
-        <Process />
-        <Projects />
-        <Advantages />
-        <Contact />
-      </main>
+
+      {loading ? (
+        <main className="main-content">
+          <ContentSkeletonLoader />
+        </main>
+      ) : (
+        <main className="main-content">
+          <Hero isLoaded={isLoaded} />
+          <MarqueeTicker />
+          <About />
+          <Services />
+          <Process />
+          <Projects />
+          <Advantages />
+          <Contact />
+        </main>
+      )}
+
       <Footer />
     </div>
   );

@@ -11,6 +11,7 @@ import React, {
   useRef,
 } from 'react';
 import './CardSwap.css';
+import { SkeletonImage } from '../Skeleton';
 
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -168,7 +169,7 @@ export const ItemCard: React.FC<{ item: CardSwapItem }> = ({ item }) => (
       )}
       {item.image && (
         <div className="card-swap-media">
-          <img src={item.image} alt={item.alt ?? item.title ?? ''} draggable={false} />
+          <SkeletonImage src={item.image} alt={item.alt ?? item.title ?? ''} draggable={false} />
         </div>
       )}
     </div>
