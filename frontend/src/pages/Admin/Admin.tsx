@@ -21,6 +21,7 @@ import {
 import { useContent, ISiteContent, IServiceItem } from '../../context/ContentContext';
 import { AdminLogin } from './AdminLogin';
 import { ProjectManager } from './ProjectManager';
+import { ImageUploadField } from './ImageUploadField';
 import './Admin.css';
 
 type AdminTab = 'hero' | 'marquee' | 'about' | 'services' | 'process' | 'projects' | 'advantages' | 'contact' | 'footer';
@@ -690,17 +691,18 @@ export const Admin: React.FC = () => {
                           }}
                         />
                       </div>
-                      <div className="admin-form-group">
-                        <label className="admin-label">Image URL (Carousel Card)</label>
-                        <input
-                          type="text"
-                          className="admin-input"
+                      <div className="admin-form-group col-span-2">
+                        <ImageUploadField
+                          label="Carousel Card Image"
+                          hint="Upload file directly to Cloudinary or paste URL"
                           value={srv.src}
-                          onChange={(e) => {
+                          folder="services"
+                          onChange={(newUrl) => {
                             const updated = [...formData.services.services];
-                            updated[idx].src = e.target.value;
+                            updated[idx].src = newUrl;
                             setFormData({ ...formData, services: { ...formData.services, services: updated } });
                           }}
+                          showToast={showToast}
                         />
                       </div>
                       <div className="admin-form-group col-span-2">

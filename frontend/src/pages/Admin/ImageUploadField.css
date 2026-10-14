@@ -1,0 +1,198 @@
+/* Image Upload Field for Admin Console */
+.image-upload-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.image-upload-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.image-upload-card-layout {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1rem;
+  background: #09090e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 0.85rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-upload-card-layout:hover,
+.image-upload-card-layout.drag-over {
+  border-color: rgba(255, 56, 56, 0.35);
+  box-shadow: 0 0 16px rgba(255, 56, 56, 0.08);
+}
+
+.image-upload-thumbnail-box {
+  position: relative;
+  width: 140px;
+  height: 95px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111118;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.image-upload-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.image-upload-thumbnail-box:hover .image-upload-thumbnail-img {
+  transform: scale(1.05);
+}
+
+.image-upload-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  color: #6b7280;
+  font-size: 0.72rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.image-upload-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 9, 14, 0.88);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  color: #FF3838;
+  font-size: 0.72rem;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.image-upload-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.image-upload-btn-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.image-upload-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.image-upload-action-btn.primary {
+  background: linear-gradient(135deg, #FF3838 0%, #b81414 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(255, 56, 56, 0.25);
+}
+
+.image-upload-action-btn.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff5252 0%, #d11818 100%);
+  box-shadow: 0 4px 14px rgba(255, 56, 56, 0.35);
+  transform: translateY(-1px);
+}
+
+.image-upload-action-btn.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9ca3af;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.image-upload-action-btn.secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.image-upload-action-btn.danger {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.image-upload-action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.image-upload-action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.image-upload-url-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #0d0d14;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem;
+}
+
+.image-upload-url-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e5e7eb;
+  font-size: 0.78rem;
+  font-family: monospace;
+}
+
+.image-upload-url-input::placeholder {
+  color: #4b5563;
+}
+
+.image-upload-cdn-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .image-upload-card-layout {
+    grid-template-columns: 1fr;
+  }
+  .image-upload-thumbnail-box {
+    width: 100%;
+    height: 140px;
+  }
+}
