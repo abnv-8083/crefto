@@ -135,13 +135,13 @@ export const Contact: React.FC = () => {
 
           <div className="contact-methods-list">
             {/* Business Email */}
-            <a href={`mailto:${contactData.email || 'creftoofficial@gmail.com'}`} className="contact-method-card">
+            <a href={`mailto:${contactData.email || 'crefto@charease.in'}`} className="contact-method-card">
               <div className="contact-method-icon">
                 <Mail size={20} className="text-white" />
               </div>
               <div className="contact-method-text">
                 <span className="contact-method-label">Official Inquiries</span>
-                <span className="contact-method-val">{contactData.email || 'creftoofficial@gmail.com'}</span>
+                <span className="contact-method-val">{contactData.email || 'crefto@charease.in'}</span>
               </div>
             </a>
 

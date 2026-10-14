@@ -606,7 +606,7 @@ export const defaultSiteContent: ISiteContent = {
     title: "Let's Build Something Extraordinary Together",
     description:
       'Have an upcoming project, website redesign, or custom web application in mind? Connect directly with our engineering team.',
-    email: 'contact@chargeease.in',
+    email: 'crefto@charease.in',
     phone: '+91 (0) 800-CREFTO',
     location: 'Bangalore, India • Available Worldwide',
     hours: 'Mon - Fri: 9:00 AM - 7:00 PM IST',
