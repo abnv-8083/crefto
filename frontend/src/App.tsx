@@ -9,7 +9,10 @@ const MIN_LOADING_MS = 2000;
 
 const AppInner: React.FC = () => {
   const { loading: contentLoading } = useContent();
-  const [isLoading, setIsLoading] = useState(true);
+  // loadingOverlayDone: the overlay fade has completed, overlay is removed
+  const [loadingOverlayDone, setLoadingOverlayDone] = useState(false);
+  // homeReady: Home has been mounted and GSAP can start (one rAF after overlay gone)
+  const [homeReady, setHomeReady] = useState(false);
   const [minTimePassed, setMinTimePassed] = useState(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(() => {
     return (
@@ -19,7 +22,6 @@ const AppInner: React.FC = () => {
     );
   });
 
-  // Enforce a minimum display time so the animation isn't cut short
   useEffect(() => {
     const timer = setTimeout(() => setMinTimePassed(true), MIN_LOADING_MS);
     return () => clearTimeout(timer);
@@ -33,7 +35,6 @@ const AppInner: React.FC = () => {
         window.location.hash.startsWith('#admin');
       setIsAdmin(adminActive);
     };
-
     window.addEventListener('popstate', checkRoute);
     window.addEventListener('hashchange', checkRoute);
     return () => {
@@ -42,20 +43,27 @@ const AppInner: React.FC = () => {
     };
   }, []);
 
-  // Start fade-out once min time has passed AND content is ready.
-  // Loading calls onFinish after the 600ms fade, which sets isLoading false.
+  // Once the overlay is fully gone, wait one animation frame so the browser
+  // has painted Home before GSAP fires — prevents the headline from being invisible
+  useEffect(() => {
+    if (!loadingOverlayDone) return;
+    const raf = requestAnimationFrame(() => setHomeReady(true));
+    return () => cancelAnimationFrame(raf);
+  }, [loadingOverlayDone]);
+
   const shouldDismiss = minTimePassed && !contentLoading;
 
   return isAdmin ? (
     <Admin />
   ) : (
     <>
-      {isLoading && (
-        <Loading onFinish={() => setIsLoading(false)} dismiss={shouldDismiss} />
+      {/* Loading overlay: stays until its 600ms CSS fade completes */}
+      {!loadingOverlayDone && (
+        <Loading onFinish={() => setLoadingOverlayDone(true)} dismiss={shouldDismiss} />
       )}
-      {/* Only mount Home after loading is done so GSAP animations
-          always start fresh with isLoaded=true */}
-      {!isLoading && <Home isLoaded={true} />}
+      {/* Home mounts as soon as the overlay is gone (no black screen gap),
+          but isLoaded=true is delayed one rAF so GSAP queries painted elements */}
+      {loadingOverlayDone && <Home isLoaded={homeReady} />}
     </>
   );
 };
