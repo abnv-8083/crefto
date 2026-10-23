@@ -4,16 +4,16 @@ import { Admin } from './pages/Admin/Admin';
 import { Loading } from './components/Loading/Loading';
 import { ContentProvider, useContent } from './context/ContentContext';
 
-// Minimum time to show the loading screen so the particle animation isn't jarring
 const MIN_LOADING_MS = 2000;
 
 const AppInner: React.FC = () => {
   const { loading: contentLoading } = useContent();
-  // loadingOverlayDone: the overlay fade has completed, overlay is removed
-  const [loadingOverlayDone, setLoadingOverlayDone] = useState(false);
-  // homeReady: Home has been mounted and GSAP can start (one rAF after overlay gone)
-  const [homeReady, setHomeReady] = useState(false);
   const [minTimePassed, setMinTimePassed] = useState(false);
+  // overlayVisible: controls whether the loading overlay is shown
+  const [overlayVisible, setOverlayVisible] = useState(true);
+  // homeAnimating: passed as isLoaded to Home — only true after overlay is fully gone
+  const [homeAnimating, setHomeAnimating] = useState(false);
+
   const [isAdmin, setIsAdmin] = useState<boolean>(() => {
     return (
       window.location.pathname.startsWith('/admin') ||
@@ -43,27 +43,38 @@ const AppInner: React.FC = () => {
     };
   }, []);
 
-  // Once the overlay is fully gone, wait one animation frame so the browser
-  // has painted Home before GSAP fires — prevents the headline from being invisible
-  useEffect(() => {
-    if (!loadingOverlayDone) return;
-    const raf = requestAnimationFrame(() => setHomeReady(true));
-    return () => cancelAnimationFrame(raf);
-  }, [loadingOverlayDone]);
-
   const shouldDismiss = minTimePassed && !contentLoading;
+
+  const handleLoadingFinish = () => {
+    // Step 1: hide the overlay div (keep it in DOM one more frame)
+    setOverlayVisible(false);
+    // Step 2: one rAF later, trigger Home's entrance animations
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setHomeAnimating(true);
+      });
+    });
+  };
 
   return isAdmin ? (
     <Admin />
   ) : (
     <>
-      {/* Loading overlay: stays until its 600ms CSS fade completes */}
-      {!loadingOverlayDone && (
-        <Loading onFinish={() => setLoadingOverlayDone(true)} dismiss={shouldDismiss} />
-      )}
-      {/* Home mounts as soon as the overlay is gone (no black screen gap),
-          but isLoaded=true is delayed one rAF so GSAP queries painted elements */}
-      {loadingOverlayDone && <Home isLoaded={homeReady} />}
+      {/* ── Loading overlay ──────────────────────────────────────────────
+          Always rendered until onFinish fires; CSS handles the fade-out.
+          After finish we hide it with display:none so it can't block clicks. */}
+      <div style={{ display: overlayVisible ? 'block' : 'none' }}>
+        <Loading onFinish={handleLoadingFinish} dismiss={shouldDismiss} />
+      </div>
+
+      {/* ── Home page ────────────────────────────────────────────────────
+          Always in the DOM so there is never a blank frame.
+          Invisible while the loading overlay is covering it;
+          visibility (not display) so layout is preserved and GSAP can
+          measure elements before animations start. */}
+      <div style={{ visibility: overlayVisible ? 'hidden' : 'visible' }}>
+        <Home isLoaded={homeAnimating} />
+      </div>
     </>
   );
 };

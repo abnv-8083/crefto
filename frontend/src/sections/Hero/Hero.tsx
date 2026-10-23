@@ -63,6 +63,7 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
         <div className="hero-content hero-content-centered">
           <h1 className="hero-title hero-title-centered">
             <FoldText
+              key={`fold1-${isLoaded}`}
               text={heroData.headlinePart1}
               splitBy="char"
               hinge="top"
@@ -78,6 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
             />
             <br />
             <FoldText
+              key={`fold2-${isLoaded}`}
               text={heroData.headlinePart2}
               splitBy="char"
               hinge="top"
