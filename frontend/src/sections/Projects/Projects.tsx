@@ -199,7 +199,7 @@ export const Projects: React.FC = () => {
 
                       {/* Visual Image Media with Skeleton Shimmer */}
                       <div className="swap-media-wrap">
-                        <SkeletonImage src={proj.image} alt={proj.title} draggable={false} />
+                        <SkeletonImage src={proj.image} alt={proj.title} draggable={false} loading="lazy" decoding="async" />
                         <div className="swap-media-gradient-overlay" />
 
                         {/* Top Impact Metric Badge */}
@@ -382,7 +382,7 @@ export const Projects: React.FC = () => {
                   {/* Left Column: Visual Media Banner + Metrics + Tech Stack */}
                   <div className="modal-col-left">
                     <div className="modal-media-banner">
-                      <SkeletonImage src={selectedModalProject.image} alt={selectedModalProject.title} />
+                      <SkeletonImage src={selectedModalProject.image} alt={selectedModalProject.title} loading="lazy" decoding="async" />
                       <div className="modal-media-overlay" />
                       <div className="modal-badge-row">
                         <span className="modal-cat-tag">{selectedModalProject.category}</span>

@@ -19,4 +19,17 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    target: 'es2015',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React — tiny, cached aggressively
+          'vendor-react': ['react', 'react-dom'],
+          // GSAP — large animation library, changes rarely
+          'vendor-gsap': ['gsap'],
+        },
+      },
+    },
+  },
 });

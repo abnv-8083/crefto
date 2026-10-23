@@ -213,12 +213,20 @@ export const ThreeCrystalSphere: React.FC<ThreeCrystalSphereProps> = ({
     const resizeObserver = new ResizeObserver(() => handleResize());
     resizeObserver.observe(container);
 
-    // 8. Animation Loop
+    // 8. Animation Loop — paused when off-screen via IntersectionObserver
     let animationFrameId: number;
     const clock = new THREE.Clock();
+    let isVisible = true;
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { rootMargin: '100px' }
+    );
+    visibilityObserver.observe(container);
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+      if (!isVisible) return; // skip render when off-screen
 
       const elapsedTime = clock.getElapsedTime();
       sphereMaterial.uniforms.uTime.value = elapsedTime;
@@ -244,6 +252,7 @@ export const ThreeCrystalSphere: React.FC<ThreeCrystalSphereProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
+      visibilityObserver.disconnect();
 
       container.removeEventListener('mousemove', handlePointerMove);
       container.removeEventListener('mouseenter', handlePointerEnter);

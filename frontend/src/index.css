@@ -3545,3 +3545,67 @@ section {
     gap: 8px;
   }
 }
+
+
+/* ==========================================================================
+   Performance Optimizations
+   ========================================================================== */
+
+/* CSS containment — limit browser reflow/repaint scope per section */
+.hero-section,
+.about-section,
+.services-section,
+.process-section,
+.projects-section,
+.advantages-section,
+.contact-section {
+  contain: layout style;
+}
+
+/* content-visibility — skip rendering off-screen sections entirely */
+.about-section,
+.services-section,
+.process-section,
+.projects-section,
+.advantages-section,
+.contact-section {
+  content-visibility: auto;
+  /* intrinsic-size prevents layout shift when section is skipped */
+  contain-intrinsic-size: 0 600px;
+}
+
+/* will-change only on elements that are actively animating via GSAP/CSS.
+   Applied by JS (gsap sets it during tween, clears after via clearProps).
+   Only the marquee and loading bar need it permanently. */
+.marquee-track {
+  will-change: transform;
+}
+
+.loading-progress-bar {
+  will-change: transform;
+}
+
+/* Ensure images never cause layout shift */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth font rendering on all devices */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Reduce motion — respect user preference globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
