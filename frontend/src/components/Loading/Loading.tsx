@@ -2,14 +2,33 @@ import React, { useEffect, useState } from 'react';
 import ParticleText from './ParticleText';
 
 interface LoadingProps {
+  /**
+   * Called after the fade-out animation completes.
+   * The parent controls WHEN to dismiss — set `dismiss` to true when ready.
+   */
   onFinish?: () => void;
+  /** When true, the overlay begins fading out and then calls onFinish. */
+  dismiss?: boolean;
+  /** @deprecated Use `dismiss` prop instead. Kept for backwards compatibility. */
   duration?: number;
 }
 
-export const Loading: React.FC<LoadingProps> = ({ onFinish, duration = 4000 }) => {
+export const Loading: React.FC<LoadingProps> = ({ onFinish, dismiss = false, duration }) => {
   const [fadingOut, setFadingOut] = useState(false);
 
+  // Parent-driven dismiss (new behaviour)
   useEffect(() => {
+    if (!dismiss || fadingOut) return;
+    setFadingOut(true);
+    const finishTimer = setTimeout(() => {
+      if (onFinish) onFinish();
+    }, 600);
+    return () => clearTimeout(finishTimer);
+  }, [dismiss, fadingOut, onFinish]);
+
+  // Legacy self-dismiss via duration (only fires if dismiss prop is never set to true)
+  useEffect(() => {
+    if (dismiss || duration == null) return;
     const timer = setTimeout(() => {
       setFadingOut(true);
       const finishTimer = setTimeout(() => {
@@ -17,9 +36,9 @@ export const Loading: React.FC<LoadingProps> = ({ onFinish, duration = 4000 }) =
       }, 600);
       return () => clearTimeout(finishTimer);
     }, duration);
-
     return () => clearTimeout(timer);
-  }, [duration, onFinish]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [duration]);
 
   return (
     <div className={`loading-screen-overlay ${fadingOut ? 'fade-out' : ''}`}>
