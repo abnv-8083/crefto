@@ -42,8 +42,8 @@ const AppInner: React.FC = () => {
     };
   }, []);
 
-  // Tell Loading to start its fade-out once the min time has passed AND content is ready.
-  // Loading will call onFinish after the 600ms fade, which sets isLoading false.
+  // Start fade-out once min time has passed AND content is ready.
+  // Loading calls onFinish after the 600ms fade, which sets isLoading false.
   const shouldDismiss = minTimePassed && !contentLoading;
 
   return isAdmin ? (
@@ -53,7 +53,9 @@ const AppInner: React.FC = () => {
       {isLoading && (
         <Loading onFinish={() => setIsLoading(false)} dismiss={shouldDismiss} />
       )}
-      <Home isLoaded={!isLoading} />
+      {/* Only mount Home after loading is done so GSAP animations
+          always start fresh with isLoaded=true */}
+      {!isLoading && <Home isLoaded={true} />}
     </>
   );
 };
