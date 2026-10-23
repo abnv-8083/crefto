@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Home } from './pages/Home/Home';
 import { Admin } from './pages/Admin/Admin';
 import { Loading } from './components/Loading/Loading';
-import { ContentProvider, useContent } from './context/ContentContext';
+import { ContentProvider } from './context/ContentContext';
 
 const MIN_LOADING_MS = 2000;
-// Max time to wait for API content before dismissing anyway (uses cached/default content)
-const MAX_LOADING_MS = 5000;
 
 const AppInner: React.FC = () => {
-  const { loading: contentLoading } = useContent();
   const [minTimePassed, setMinTimePassed] = useState(false);
-  const [maxTimePassed, setMaxTimePassed] = useState(false);
   // overlayVisible: controls whether the loading overlay is shown
   const [overlayVisible, setOverlayVisible] = useState(true);
   // homeAnimating: passed as isLoaded to Home — only true after overlay is fully gone
@@ -31,11 +27,6 @@ const AppInner: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setMaxTimePassed(true), MAX_LOADING_MS);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
     const checkRoute = () => {
       const adminActive =
         window.location.pathname.startsWith('/admin') ||
@@ -51,8 +42,8 @@ const AppInner: React.FC = () => {
     };
   }, []);
 
-  // Dismiss when: min time passed AND (content loaded OR max timeout hit)
-  const shouldDismiss = minTimePassed && (!contentLoading || maxTimePassed);
+  // Dismiss after min time — no API dependency, content is already available from cache/defaults
+  const shouldDismiss = minTimePassed;
 
   const handleLoadingFinish = () => {
     // Step 1: hide the overlay div (keep it in DOM one more frame)
