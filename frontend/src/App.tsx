@@ -8,6 +8,7 @@ const MIN_LOADING_MS = 2000;
 
 const AppInner: React.FC = () => {
   const [minTimePassed, setMinTimePassed] = useState(false);
+  const [mountHome, setMountHome] = useState(false);
   // overlayVisible: controls whether the loading overlay is shown
   const [overlayVisible, setOverlayVisible] = useState(true);
   // homeAnimating: passed as isLoaded to Home — only true after overlay is fully gone
@@ -22,8 +23,13 @@ const AppInner: React.FC = () => {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => setMinTimePassed(true), MIN_LOADING_MS);
-    return () => clearTimeout(timer);
+    // Mount Home slightly before the dismiss so it's ready when overlay fades
+    const mountTimer = setTimeout(() => setMountHome(true), MIN_LOADING_MS - 400);
+    const dismissTimer = setTimeout(() => setMinTimePassed(true), MIN_LOADING_MS);
+    return () => {
+      clearTimeout(mountTimer);
+      clearTimeout(dismissTimer);
+    };
   }, []);
 
   useEffect(() => {
@@ -68,13 +74,14 @@ const AppInner: React.FC = () => {
       </div>
 
       {/* ── Home page ────────────────────────────────────────────────────
-          Always in the DOM so there is never a blank frame.
-          Invisible while the loading overlay is covering it;
-          visibility (not display) so layout is preserved and GSAP can
-          measure elements before animations start. */}
-      <div style={{ visibility: overlayVisible ? 'hidden' : 'visible' }}>
-        <Home isLoaded={homeAnimating} />
-      </div>
+          Mounted at 1.6s (400ms before dismiss) so it's ready when the
+          overlay fades. Hidden via visibility so layout exists but nothing
+          is visible until the overlay is gone. */}
+      {mountHome && (
+        <div style={{ visibility: overlayVisible ? 'hidden' : 'visible' }}>
+          <Home isLoaded={homeAnimating} />
+        </div>
+      )}
     </>
   );
 };

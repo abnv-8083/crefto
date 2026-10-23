@@ -3169,12 +3169,12 @@ section {
   height: 100%;
   background: linear-gradient(90deg, #d90b37, #ff3838, #ffffff);
   border-radius: 999px;
-  animation: loadProgress 3.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: loadProgress 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes loadProgress {
   0% { transform: translateX(-100%); }
-  50% { transform: translateX(-20%); }
+  60% { transform: translateX(-15%); }
   100% { transform: translateX(0%); }
 }
 
